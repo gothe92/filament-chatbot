@@ -66,26 +66,33 @@ trait HasChatbot
     
     /**
      * Check if model has chatbot enabled
+     * Automatically creates chatbot resource if not exists
      */
     public function hasChatbot(): bool
     {
-        return $this->chatbotResource()->exists() && $this->chatbotResource->active;
+        // Auto-create chatbot resource if it doesn't exist
+        if (!$this->chatbotResource()->exists()) {
+            $this->getOrCreateChatbotResource();
+        }
+        
+        return $this->chatbotResource->active;
     }
     
     /**
-     * Enable chatbot for this model
+     * Get or create chatbot resource automatically
      */
-    public function enableChatbot(array $settings = []): ChatbotResource
+    public function getOrCreateChatbotResource(): ChatbotResource
     {
-        return $this->chatbotResource()->updateOrCreate(
+        return $this->chatbotResource()->firstOrCreate(
             [],
-            array_merge([
+            [
                 'active' => true,
                 'rag_mode' => config('filament-chatbot.defaults.rag_mode', 'documents_and_ai'),
                 'metadata' => [],
-            ], $settings)
+            ]
         );
     }
+    
     
     /**
      * Disable chatbot for this model

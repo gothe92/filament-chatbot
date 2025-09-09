@@ -79,14 +79,28 @@ class Product extends Model
 }
 ```
 
-### 2. Enable Chatbot for Your Model
+### 2. Add Relation Managers to Your Filament Resource
 
 ```php
-$product = Product::find(1);
-$product->enableChatbot([
-    'rag_mode' => 'documents_and_ai',
-    'active' => true,
-]);
+<?php
+
+namespace App\Filament\Resources;
+
+use FilamentChatbot\Filament\Actions\AddChatbotRelationsAction;
+
+class ProductResource extends Resource
+{
+    // ... your existing code ...
+    
+    public static function getRelations(): array
+    {
+        return [
+            ...AddChatbotRelationsAction::addTo(self::class),
+            // vagy csak specifikus relation-öket:
+            // ...AddChatbotRelationsAction::only(['documents', 'questions']),
+        ];
+    }
+}
 ```
 
 ### 3. Use in Blade Template
