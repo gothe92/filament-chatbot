@@ -100,7 +100,7 @@ trait HasChatbot
     {
         $defaultSettings = [
             'active' => true,
-                'rag_mode' => Config::get('filament-chatbot.defaults.rag_mode', 'documents_and_ai'),
+            'rag_mode' => Config::get('filament-chatbot.defaults.rag_mode', 'documents_and_ai'),
             'metadata' => [],
         ];
 
