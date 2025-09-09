@@ -3,9 +3,9 @@
 namespace FilamentChatbot\Filament\Actions;
 
 use Filament\Resources\Resource;
+use FilamentChatbot\Filament\RelationManagers\ChatbotConversationsRelationManager;
 use FilamentChatbot\Filament\RelationManagers\ChatbotDocumentsRelationManager;
 use FilamentChatbot\Filament\RelationManagers\ChatbotPredefinedQuestionsRelationManager;
-use FilamentChatbot\Filament\RelationManagers\ChatbotConversationsRelationManager;
 
 class AddChatbotRelationsAction
 {
@@ -15,19 +15,19 @@ class AddChatbotRelationsAction
     public static function addTo(string $resourceClass): array
     {
         $relations = [];
-        
+
         // Add documents relation manager
         $relations[] = ChatbotDocumentsRelationManager::class;
-        
+
         // Add predefined questions relation manager
         $relations[] = ChatbotPredefinedQuestionsRelationManager::class;
-        
+
         // Add conversations relation manager
         $relations[] = ChatbotConversationsRelationManager::class;
-        
+
         return $relations;
     }
-    
+
     /**
      * Get available chatbot relation managers
      */
@@ -39,7 +39,7 @@ class AddChatbotRelationsAction
             'conversations' => ChatbotConversationsRelationManager::class,
         ];
     }
-    
+
     /**
      * Add specific chatbot relations
      */
@@ -47,13 +47,13 @@ class AddChatbotRelationsAction
     {
         $available = self::getAvailableRelations();
         $result = [];
-        
+
         foreach ($relations as $relation) {
             if (isset($available[$relation])) {
                 $result[] = $available[$relation];
             }
         }
-        
+
         return $result;
     }
 }

@@ -71,10 +71,10 @@ trait HasChatbot
     public function hasChatbot(): bool
     {
         // Auto-create chatbot resource if it doesn't exist
-        if (!$this->chatbotResource()->exists()) {
+        if (! $this->chatbotResource()->exists()) {
             $this->getOrCreateChatbotResource();
         }
-        
+
         return $this->chatbotResource->active;
     }
 
