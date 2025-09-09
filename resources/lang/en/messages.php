@@ -8,20 +8,20 @@ return [
     'online' => 'Online',
     'typing' => 'Typing...',
     'send' => 'Send',
-    
+
     // UI messages
     'type_message' => 'Type your message...',
     'start_conversation' => 'Start a conversation',
     'ask_anything' => 'Ask me anything about this item!',
     'clear_conversation' => 'Clear conversation',
     'suggested_questions' => 'Suggested questions',
-    
+
     // Status messages
     'chatbot_not_available' => 'Chatbot is not available for this item.',
     'chatbot_disabled' => 'Chatbot is currently disabled.',
     'no_documents_found' => 'I don\'t have enough information to answer your question. Please try asking something else.',
     'error_generating_response' => 'Sorry, there was an error generating a response. Please try again.',
-    
+
     // RAG modes
     'rag_modes' => [
         'documents_only' => 'Documents Only',
@@ -29,13 +29,13 @@ return [
         'ai_only' => 'AI Knowledge Only',
         'all_documents' => 'All Documents (High Token Usage)',
     ],
-    
+
     // Features
     'predefined_questions' => 'Quick Questions',
     'conversation_history' => 'Conversation History',
     'document_upload' => 'Upload Documents',
     'export_conversation' => 'Export Conversation',
-    
+
     // Admin labels
     'admin' => [
         'chatbot_resources' => 'Chatbot Resources',
@@ -51,7 +51,7 @@ return [
         'settings' => 'Settings',
         'analytics' => 'Analytics',
         'statistics' => 'Statistics',
-        
+
         // Form fields
         'title' => 'Title',
         'content' => 'Content',
@@ -73,7 +73,7 @@ return [
         'similarity_score' => 'Similarity Score',
         'response_time' => 'Response Time',
         'user_satisfaction' => 'User Satisfaction',
-        
+
         // Actions
         'enable_chatbot' => 'Enable Chatbot',
         'disable_chatbot' => 'Disable Chatbot',
@@ -87,7 +87,7 @@ return [
         'reorder_questions' => 'Reorder Questions',
         'export_data' => 'Export Data',
         'clear_history' => 'Clear History',
-        
+
         // Status
         'enabled' => 'Enabled',
         'disabled' => 'Disabled',
@@ -95,21 +95,21 @@ return [
         'completed' => 'Completed',
         'failed' => 'Failed',
         'pending' => 'Pending',
-        
+
         // Descriptions
         'chatbot_resource_description' => 'Configure chatbot settings for this resource.',
         'rag_mode_description' => 'Choose how the chatbot should generate responses.',
         'documents_description' => 'Upload and manage documents for the chatbot to reference.',
         'predefined_questions_description' => 'Create pre-written questions and answers for quick responses.',
         'conversation_description' => 'View and manage conversations between users and the chatbot.',
-        
+
         // Help text
         'rag_mode_help' => 'Documents Only: Uses only uploaded documents. Documents + AI: Prefers documents but can use AI knowledge. AI Only: Ignores documents. All Documents: Uses all documents (expensive).',
         'embedding_help' => 'Embeddings are used for semantic search in documents.',
         'chunk_help' => 'Large documents are split into smaller chunks for better processing.',
         'temperature_help' => 'Lower values make responses more focused, higher values more creative.',
     ],
-    
+
     // Validation messages
     'validation' => [
         'message_required' => 'Message is required.',
@@ -122,7 +122,7 @@ return [
         'file_max_size' => 'File is too large.',
         'file_invalid_type' => 'Invalid file type.',
     ],
-    
+
     // Success messages
     'success' => [
         'chatbot_enabled' => 'Chatbot has been enabled.',
@@ -136,7 +136,7 @@ return [
         'conversation_cleared' => 'Conversation has been cleared.',
         'settings_updated' => 'Settings have been updated successfully.',
     ],
-    
+
     // Error messages
     'errors' => [
         'chatbot_not_found' => 'Chatbot resource not found.',

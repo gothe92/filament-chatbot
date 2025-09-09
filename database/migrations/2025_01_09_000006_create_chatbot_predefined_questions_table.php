@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('order')->default(0);
             $table->json('metadata')->nullable();
             $table->timestamps();
-            
+
             $table->index(['chatbot_resource_id', 'active', 'order']);
         });
     }

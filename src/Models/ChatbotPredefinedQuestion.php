@@ -51,7 +51,8 @@ class ChatbotPredefinedQuestion extends Model
      */
     public function toggleActive(): bool
     {
-        $this->active = !$this->active;
+        $this->active = ! $this->active;
+
         return $this->save();
     }
 
@@ -73,12 +74,14 @@ class ChatbotPredefinedQuestion extends Model
             $tempOrder = $this->order;
             $this->order = $previousQuestion->order;
             $previousQuestion->order = $tempOrder;
-            
+
             $previousQuestion->save();
+
             return $this->save();
         }
 
         $this->order--;
+
         return $this->save();
     }
 
@@ -96,12 +99,14 @@ class ChatbotPredefinedQuestion extends Model
             $tempOrder = $this->order;
             $this->order = $nextQuestion->order;
             $nextQuestion->order = $tempOrder;
-            
+
             $nextQuestion->save();
+
             return $this->save();
         }
 
         $this->order++;
+
         return $this->save();
     }
 }

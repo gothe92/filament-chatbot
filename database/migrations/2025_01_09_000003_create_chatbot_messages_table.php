@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('tokens_used')->default(0);
             $table->json('metadata')->nullable();
             $table->timestamps();
-            
+
             $table->index(['conversation_id', 'created_at']);
             $table->index('role');
         });
