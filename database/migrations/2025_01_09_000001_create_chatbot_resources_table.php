@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('chatbot_resources', function (Blueprint $table) {
             $table->id();
             $table->morphs('resourceable');
-            $table->foreignId('chatbot_setting_id')->nullable()->constrained('chatbot_settings')->nullOnDelete();
+            $table->foreignId('chatbot_setting_id')->nullable();
             $table->string('rag_mode')->default('documents_and_ai');
             $table->boolean('active')->default(true);
             $table->json('metadata')->nullable();

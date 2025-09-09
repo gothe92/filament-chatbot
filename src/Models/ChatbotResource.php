@@ -55,7 +55,7 @@ class ChatbotResource extends Model
      */
     public function chatbotSetting(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\ChatbotSetting::class);
+        return $this->belongsTo(ChatbotSetting::class);
     }
 
     /**
