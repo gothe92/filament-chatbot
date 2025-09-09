@@ -2,27 +2,25 @@
 
 namespace FilamentChatbot\Services;
 
-use FilamentChatbot\Models\ChatbotResource;
-use FilamentChatbot\Models\ChatbotConversation;
-use FilamentChatbot\Models\ChatbotMessage;
-use FilamentChatbot\Models\ChatbotDocument;
-use FilamentChatbot\Models\ChatbotPredefinedQuestion;
-use App\Services\RAGService;
 use App\Services\AIServiceFactory;
+use App\Services\RAGService;
+use FilamentChatbot\Models\ChatbotMessage;
+use FilamentChatbot\Models\ChatbotResource;
 use Illuminate\Support\Facades\Log;
 
 class ChatbotService
 {
     protected $ragService;
+
     protected $aiService;
 
     public function __construct()
     {
         // Use existing RAG service if available, otherwise create a basic one
-        $this->ragService = app()->bound(RAGService::class) 
-            ? app(RAGService::class) 
+        $this->ragService = app()->bound(RAGService::class)
+            ? app(RAGService::class)
             : null;
-            
+
         $this->aiService = app()->bound('App\Services\AIServiceFactory')
             ? AIServiceFactory::create()
             : null;
@@ -51,21 +49,21 @@ class ChatbotService
             switch ($chatbotResource->rag_mode) {
                 case ChatbotResource::RAG_MODE_DOCUMENTS_ONLY:
                     return $this->generateDocumentsOnlyResponse($message, $chatbotResource, $history, $language);
-                
+
                 case ChatbotResource::RAG_MODE_DOCUMENTS_AND_AI:
                     return $this->generateDocumentsAndAIResponse($message, $chatbotResource, $history, $language);
-                
+
                 case ChatbotResource::RAG_MODE_AI_ONLY:
                     return $this->generateAIOnlyResponse($message, $chatbotResource, $history, $language);
-                
+
                 case ChatbotResource::RAG_MODE_ALL_DOCUMENTS:
                     return $this->generateAllDocumentsResponse($message, $chatbotResource, $history, $language);
-                
+
                 default:
                     return $this->generateDocumentsAndAIResponse($message, $chatbotResource, $history, $language);
             }
         } catch (\Exception $e) {
-            Log::error('Chatbot error: ' . $e->getMessage(), [
+            Log::error('Chatbot error: '.$e->getMessage(), [
                 'message' => $message,
                 'chatbot_resource_id' => $chatbotResource->id,
                 'conversation_id' => $conversationId,
@@ -85,7 +83,7 @@ class ChatbotService
     protected function checkPredefinedQuestions(string $message, ChatbotResource $chatbotResource): ?array
     {
         $questions = $chatbotResource->activePredefinedQuestions()->get();
-        
+
         foreach ($questions as $question) {
             // Simple similarity check
             $similarity = $this->calculateSimilarity($message, $question->question);
@@ -113,12 +111,12 @@ class ChatbotService
         array $history,
         string $language
     ): array {
-        if (!$this->ragService) {
+        if (! $this->ragService) {
             return $this->createErrorResponse('RAG service not available');
         }
 
         $relevantDocuments = $this->findRelevantDocuments($message, $chatbotResource);
-        
+
         if ($relevantDocuments->isEmpty()) {
             return [
                 'success' => true,
@@ -143,7 +141,7 @@ class ChatbotService
         string $language
     ): array {
         $relevantDocuments = $this->findRelevantDocuments($message, $chatbotResource);
-        
+
         return $this->generateAIResponse($message, $chatbotResource, $history, $relevantDocuments, $language, false);
     }
 
@@ -169,7 +167,7 @@ class ChatbotService
         string $language
     ): array {
         $allDocuments = $chatbotResource->documents()->get();
-        
+
         return $this->generateAIResponse($message, $chatbotResource, $history, $allDocuments, $language, false);
     }
 
@@ -184,16 +182,16 @@ class ChatbotService
         string $language,
         bool $documentsOnly = false
     ): array {
-        if (!$this->aiService) {
+        if (! $this->aiService) {
             return $this->createErrorResponse('AI service not available');
         }
 
         $systemPrompt = $this->buildSystemPrompt($chatbotResource, $documents, $language, $documentsOnly);
-        
+
         $response = $this->aiService->chat($message, $history, $systemPrompt);
-        
+
         if ($response['success']) {
-            $response['used_rag'] = !$documents->isEmpty();
+            $response['used_rag'] = ! $documents->isEmpty();
             $response['rag_documents'] = $documents->map(function ($doc) {
                 return [
                     'id' => $doc->id,
@@ -217,18 +215,18 @@ class ChatbotService
 
         // Simple keyword search fallback
         $documents = $chatbotResource->documents()->get();
-        
+
         return $documents->filter(function ($document) use ($message) {
             $messageWords = explode(' ', strtolower($message));
-            $content = strtolower($document->title . ' ' . $document->content);
-            
+            $content = strtolower($document->title.' '.$document->content);
+
             $matches = 0;
             foreach ($messageWords as $word) {
                 if (strlen($word) > 2 && strpos($content, $word) !== false) {
                     $matches++;
                 }
             }
-            
+
             return $matches > 0;
         });
     }
@@ -244,24 +242,24 @@ class ChatbotService
     ): string {
         $resourceable = $chatbotResource->resourceable;
         $name = $resourceable->name ?? $resourceable->title ?? 'Item';
-        
-        $prompt = $language === 'hu' 
+
+        $prompt = $language === 'hu'
             ? "Segítőkész asszisztens vagy, aki információt nyújt erről: {$name}."
             : "You are a helpful assistant providing information about: {$name}.";
 
         if ($resourceable->description ?? false) {
-            $prompt .= "\n\n" . ($language === 'hu' ? 'Leírás: ' : 'Description: ') . $resourceable->description;
+            $prompt .= "\n\n".($language === 'hu' ? 'Leírás: ' : 'Description: ').$resourceable->description;
         }
 
         if ($documentsOnly) {
-            $prompt .= "\n\n" . ($language === 'hu' 
-                ? "FONTOS: Kizárólag a mellékelt dokumentumok alapján válaszolj. Ha az információ nem található a dokumentumokban, akkor mondd meg, hogy nem található releváns információ."
-                : "IMPORTANT: Only answer based on the provided documents. If information is not found in the documents, say that no relevant information is available.");
+            $prompt .= "\n\n".($language === 'hu'
+                ? 'FONTOS: Kizárólag a mellékelt dokumentumok alapján válaszolj. Ha az információ nem található a dokumentumokban, akkor mondd meg, hogy nem található releváns információ.'
+                : 'IMPORTANT: Only answer based on the provided documents. If information is not found in the documents, say that no relevant information is available.');
         }
 
-        if (!$documents->isEmpty()) {
-            $prompt .= "\n\n" . ($language === 'hu' ? 'Elérhető dokumentumok:' : 'Available documents:') . "\n";
-            
+        if (! $documents->isEmpty()) {
+            $prompt .= "\n\n".($language === 'hu' ? 'Elérhető dokumentumok:' : 'Available documents:')."\n";
+
             foreach ($documents as $document) {
                 $prompt .= "\nDokumentum: {$document->title}\n{$document->content}\n";
             }
@@ -295,6 +293,7 @@ class ChatbotService
     protected function calculateSimilarity(string $str1, string $str2): float
     {
         similar_text(strtolower($str1), strtolower($str2), $percent);
+
         return $percent / 100;
     }
 

@@ -48,7 +48,7 @@ class ChatbotDocument extends Model
      */
     public function hasEmbedding(): bool
     {
-        return !empty($this->embedding);
+        return ! empty($this->embedding);
     }
 
     /**
@@ -64,18 +64,18 @@ class ChatbotDocument extends Model
      */
     public function getFileSizeAttribute(): ?string
     {
-        if (!$this->file_path || !file_exists(storage_path('app/' . $this->file_path))) {
+        if (! $this->file_path || ! file_exists(storage_path('app/'.$this->file_path))) {
             return null;
         }
 
-        $bytes = filesize(storage_path('app/' . $this->file_path));
+        $bytes = filesize(storage_path('app/'.$this->file_path));
         $units = ['B', 'KB', 'MB', 'GB'];
-        
+
         for ($i = 0; $bytes > 1024; $i++) {
             $bytes /= 1024;
         }
-        
-        return round($bytes, 2) . ' ' . $units[$i];
+
+        return round($bytes, 2).' '.$units[$i];
     }
 
     /**

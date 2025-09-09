@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('language', 10)->default('hu');
             $table->json('metadata')->nullable();
             $table->timestamps();
-            
+
             $table->index(['chatbot_resource_id', 'session_id']);
             $table->index('created_at');
         });

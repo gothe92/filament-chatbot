@@ -3,9 +3,9 @@
 namespace FilamentChatbot\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class ChatbotResource extends Model
 {
@@ -25,8 +25,11 @@ class ChatbotResource extends Model
 
     // RAG mode constants
     const RAG_MODE_DOCUMENTS_ONLY = 'documents_only';
+
     const RAG_MODE_DOCUMENTS_AND_AI = 'documents_and_ai';
+
     const RAG_MODE_AI_ONLY = 'ai_only';
+
     const RAG_MODE_ALL_DOCUMENTS = 'all_documents';
 
     public static function getRagModes(): array

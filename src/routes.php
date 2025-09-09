@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use FilamentChatbot\Http\Controllers\ChatbotApiController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('api/chatbot')->middleware(['api'])->group(function () {
     Route::post('/message', [ChatbotApiController::class, 'sendMessage']);

@@ -76,13 +76,13 @@ return [
         'model' => env('CHATBOT_AI_MODEL', 'claude-3-5-haiku-20241022'),
         'max_tokens' => env('CHATBOT_MAX_TOKENS', 1024),
         'temperature' => env('CHATBOT_TEMPERATURE', 0.7),
-        
+
         // Claude specific
         'claude' => [
             'api_key' => env('CLAUDE_API_KEY'),
             'model' => env('CLAUDE_MODEL', 'claude-3-5-haiku-20241022'),
         ],
-        
+
         // OpenAI specific
         'openai' => [
             'api_key' => env('OPENAI_API_KEY'),

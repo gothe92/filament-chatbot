@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('tokens_count')->default(0);
             $table->json('metadata')->nullable();
             $table->timestamps();
-            
+
             $table->index('chatbot_resource_id');
             $table->index('created_at');
         });

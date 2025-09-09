@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('tokens_count')->default(0);
             $table->json('metadata')->nullable();
             $table->timestamps();
-            
+
             $table->index(['document_id', 'chunk_index']);
         });
     }

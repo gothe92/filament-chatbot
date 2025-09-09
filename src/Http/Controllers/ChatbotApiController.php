@@ -2,13 +2,13 @@
 
 namespace FilamentChatbot\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
-use FilamentChatbot\Models\ChatbotResource;
 use FilamentChatbot\Models\ChatbotConversation;
 use FilamentChatbot\Models\ChatbotMessage;
+use FilamentChatbot\Models\ChatbotResource;
 use FilamentChatbot\Services\ChatbotService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 
 class ChatbotApiController extends Controller
@@ -32,10 +32,10 @@ class ChatbotApiController extends Controller
         ]);
 
         $chatbotResource = ChatbotResource::findOrFail($request->chatbot_resource_id);
-        
-        if (!$chatbotResource->active) {
+
+        if (! $chatbotResource->active) {
             return response()->json([
-                'error' => __('filament-chatbot::messages.chatbot_disabled')
+                'error' => __('filament-chatbot::messages.chatbot_disabled'),
             ], 403);
         }
 
@@ -65,9 +65,9 @@ class ChatbotApiController extends Controller
             app()->getLocale()
         );
 
-        if (!$response['success']) {
+        if (! $response['success']) {
             return response()->json([
-                'error' => $response['content'] ?? __('filament-chatbot::messages.error_generating_response')
+                'error' => $response['content'] ?? __('filament-chatbot::messages.error_generating_response'),
             ], 500);
         }
 
@@ -105,8 +105,8 @@ class ChatbotApiController extends Controller
         $conversations = $chatbotResource->conversations()
             ->with(['messages' => function ($query) {
                 $query->select(['id', 'conversation_id', 'role', 'created_at'])
-                      ->latest()
-                      ->take(1);
+                    ->latest()
+                    ->take(1);
             }])
             ->latest()
             ->paginate(20);
@@ -128,9 +128,9 @@ class ChatbotApiController extends Controller
     {
         $conversation = ChatbotConversation::where('session_id', $sessionId)->first();
 
-        if (!$conversation) {
+        if (! $conversation) {
             return response()->json([
-                'error' => __('filament-chatbot::messages.errors.conversation_not_found')
+                'error' => __('filament-chatbot::messages.errors.conversation_not_found'),
             ], 404);
         }
 
@@ -165,9 +165,9 @@ class ChatbotApiController extends Controller
     {
         $conversation = ChatbotConversation::where('session_id', $sessionId)->first();
 
-        if (!$conversation) {
+        if (! $conversation) {
             return response()->json([
-                'error' => __('filament-chatbot::messages.errors.conversation_not_found')
+                'error' => __('filament-chatbot::messages.errors.conversation_not_found'),
             ], 404);
         }
 

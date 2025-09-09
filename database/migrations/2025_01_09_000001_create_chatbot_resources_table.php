@@ -16,7 +16,7 @@ return new class extends Migration
             $table->boolean('active')->default(true);
             $table->json('metadata')->nullable();
             $table->timestamps();
-            
+
             $table->index(['resourceable_type', 'resourceable_id', 'active']);
         });
     }
