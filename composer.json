@@ -1,0 +1,86 @@
+{
+    "name": "gothe92/filament-chatbot",
+    "description": "A powerful Filament plugin for adding AI-powered chatbot functionality to any resource with RAG support and customizable UI",
+    "keywords": [
+        "filament",
+        "chatbot",
+        "ai",
+        "rag",
+        "laravel",
+        "livewire",
+        "claude",
+        "openai",
+        "plugin"
+    ],
+    "homepage": "https://github.com/gothe92/filament-chatbot",
+    "type": "library",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/gothe92/filament-chatbot/issues",
+        "source": "https://github.com/gothe92/filament-chatbot"
+    },
+    "authors": [
+        {
+            "name": "András Szentiványi",
+            "email": "andras@szentivanyi.dev",
+            "homepage": "https://github.com/gothe92",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^3.0",
+        "livewire/livewire": "^3.0",
+        "laravel/framework": "^11.0|^12.0",
+        "illuminate/contracts": "^11.0|^12.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.13",
+        "nunomaduro/collision": "^8.0",
+        "orchestra/testbench": "^9.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpunit/phpunit": "^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FilamentChatbot\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FilamentChatbot\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@composer run prepare",
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "start": [
+            "Composer\\Config::disableProcessTimeout",
+            "@composer run build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FilamentChatbot\\FilamentChatbotServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

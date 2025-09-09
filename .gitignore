@@ -1,0 +1,45 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Laravel specific
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+/storage/logs/*.log
+
+# Testing
+.phpunit.result.cache
+coverage/
+.pest/
+
+# Build files
+/build/
+/public/build/
+/public/hot
+
+# Temporary files
+*.tmp
+*.temp
+~*
+
+# Package specific
+/workbench/
