@@ -12,7 +12,9 @@ use FilamentChatbot\Models\ChatbotDocument;
 class ChatbotDocumentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'chatbotDocuments';
+
     protected static ?string $recordTitleAttribute = 'title';
+
     protected static ?string $title = 'Chatbot Documents';
 
     public function form(Form $form): Form
@@ -23,18 +25,18 @@ class ChatbotDocumentsRelationManager extends RelationManager
                     ->required()
                     ->maxLength(255)
                     ->label(__('filament-chatbot::messages.admin.title')),
-                
+
                 Forms\Components\Textarea::make('content')
                     ->required()
                     ->rows(6)
                     ->label(__('filament-chatbot::messages.admin.content')),
-                
+
                 Forms\Components\FileUpload::make('file_path')
                     ->label(__('filament-chatbot::messages.admin.file_path'))
                     ->acceptedFileTypes(['application/pdf', 'text/plain', 'application/msword'])
                     ->directory('chatbot-documents')
                     ->maxSize(10240),
-                
+
                 Forms\Components\KeyValue::make('metadata')
                     ->label(__('filament-chatbot::messages.admin.metadata'))
                     ->keyLabel('Key')
@@ -51,26 +53,26 @@ class ChatbotDocumentsRelationManager extends RelationManager
                     ->searchable()
                     ->sortable()
                     ->label(__('filament-chatbot::messages.admin.title')),
-                
+
                 Tables\Columns\TextColumn::make('file_type')
                     ->badge()
                     ->label(__('filament-chatbot::messages.admin.file_type')),
-                
+
                 Tables\Columns\TextColumn::make('chunks_count')
                     ->numeric()
                     ->sortable()
                     ->label(__('filament-chatbot::messages.admin.chunks_count')),
-                
+
                 Tables\Columns\TextColumn::make('tokens_count')
                     ->numeric()
                     ->sortable()
                     ->label('Tokens'),
-                
+
                 Tables\Columns\IconColumn::make('has_embedding')
                     ->boolean()
-                    ->getStateUsing(fn (ChatbotDocument $record) => !empty($record->embedding))
+                    ->getStateUsing(fn (ChatbotDocument $record) => ! empty($record->embedding))
                     ->label(__('filament-chatbot::messages.admin.embedding')),
-                
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -93,14 +95,14 @@ class ChatbotDocumentsRelationManager extends RelationManager
                         // Auto-create chatbot resource if needed
                         $chatbotResource = $this->getOwnerRecord()->getOrCreateChatbotResource();
                         $data['chatbot_resource_id'] = $chatbotResource->id;
-                        
+
                         return $data;
                     }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                
+
                 Tables\Actions\Action::make('generate_embeddings')
                     ->icon('heroicon-o-cpu-chip')
                     ->label(__('filament-chatbot::messages.admin.generate_embeddings'))
@@ -109,7 +111,7 @@ class ChatbotDocumentsRelationManager extends RelationManager
                         if (class_exists('\App\Jobs\ProcessDocument')) {
                             \App\Jobs\ProcessDocument::dispatch($record);
                         }
-                        
+
                         $this->notify('success', __('filament-chatbot::messages.success.embeddings_generated'));
                     })
                     ->requiresConfirmation()
