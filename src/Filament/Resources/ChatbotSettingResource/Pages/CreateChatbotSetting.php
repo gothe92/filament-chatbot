@@ -2,8 +2,8 @@
 
 namespace FilamentChatbot\Filament\Resources\ChatbotSettingResource\Pages;
 
-use FilamentChatbot\Filament\Resources\ChatbotSettingResource;
 use Filament\Resources\Pages\CreateRecord;
+use FilamentChatbot\Filament\Resources\ChatbotSettingResource;
 
 class CreateChatbotSetting extends CreateRecord
 {

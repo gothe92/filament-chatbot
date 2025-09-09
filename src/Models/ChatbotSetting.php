@@ -34,20 +34,29 @@ class ChatbotSetting extends Model
 
     // Personality constants
     const PERSONALITY_HELPFUL = 'helpful';
+
     const PERSONALITY_PROFESSIONAL = 'professional';
+
     const PERSONALITY_FRIENDLY = 'friendly';
+
     const PERSONALITY_SCHOLARLY = 'scholarly';
 
     // Tone constants
     const TONE_PROFESSIONAL = 'professional';
+
     const TONE_CASUAL = 'casual';
+
     const TONE_FORMAL = 'formal';
+
     const TONE_ENTHUSIASTIC = 'enthusiastic';
 
     // Expertise level constants
     const EXPERTISE_BASIC = 'basic';
+
     const EXPERTISE_INTERMEDIATE = 'intermediate';
+
     const EXPERTISE_ADVANCED = 'advanced';
+
     const EXPERTISE_EXPERT = 'expert';
 
     public static function getPersonalities(): array
@@ -103,7 +112,7 @@ class ChatbotSetting extends Model
     {
         // Remove default from other settings
         self::where('is_default', true)->update(['is_default' => false]);
-        
+
         // Set this as default
         return $this->update(['is_default' => true]);
     }

@@ -2,13 +2,13 @@
 
 namespace FilamentChatbot\Filament\Resources;
 
-use FilamentChatbot\Filament\Resources\ChatbotSettingResource\Pages;
-use FilamentChatbot\Models\ChatbotSetting;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use FilamentChatbot\Filament\Resources\ChatbotSettingResource\Pages;
+use FilamentChatbot\Models\ChatbotSetting;
 
 class ChatbotSettingResource extends Resource
 {
@@ -32,18 +32,17 @@ class ChatbotSettingResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (?string $state, Forms\Set $set) => 
-                                $set('name', ucfirst($state))
+                            ->afterStateUpdated(fn (?string $state, Forms\Set $set) => $set('name', ucfirst($state))
                             ),
-                        
+
                         Forms\Components\Textarea::make('description')
                             ->rows(3)
                             ->maxLength(1000),
-                        
+
                         Forms\Components\Toggle::make('is_default')
                             ->label('Default Setting')
                             ->helperText('Only one setting can be default at a time'),
-                        
+
                         Forms\Components\Toggle::make('active')
                             ->label('Active')
                             ->default(true),
@@ -56,12 +55,12 @@ class ChatbotSettingResource extends Resource
                             ->options(ChatbotSetting::getPersonalities())
                             ->required()
                             ->default(ChatbotSetting::PERSONALITY_HELPFUL),
-                        
+
                         Forms\Components\Select::make('tone')
                             ->options(ChatbotSetting::getTones())
                             ->required()
                             ->default(ChatbotSetting::TONE_PROFESSIONAL),
-                        
+
                         Forms\Components\Select::make('expertise_level')
                             ->label('Expertise Level')
                             ->options(ChatbotSetting::getExpertiseLevels())
@@ -79,7 +78,7 @@ class ChatbotSettingResource extends Resource
                             ->minValue(50)
                             ->maxValue(1000)
                             ->step(50),
-                        
+
                         Forms\Components\TextInput::make('temperature')
                             ->label('Temperature (creativity)')
                             ->numeric()
@@ -97,7 +96,7 @@ class ChatbotSettingResource extends Resource
                             ->label('Forbidden Topics')
                             ->placeholder('Add topics to avoid discussing...')
                             ->helperText('Topics the chatbot should avoid discussing'),
-                        
+
                         Forms\Components\TagsInput::make('avoided_expressions')
                             ->label('Avoided Expressions')
                             ->placeholder('Add expressions to avoid...')
@@ -111,7 +110,7 @@ class ChatbotSettingResource extends Resource
                             ->rows(4)
                             ->placeholder('Define specific behavioral rules for this chatbot...')
                             ->helperText('Specific rules about how the chatbot should behave'),
-                        
+
                         Forms\Components\Textarea::make('custom_instructions')
                             ->label('Custom Instructions')
                             ->rows(4)
@@ -128,20 +127,20 @@ class ChatbotSettingResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                
+
                 Tables\Columns\TextColumn::make('personality')
                     ->badge()
                     ->formatStateUsing(fn (ChatbotSetting $record) => $record->getPersonalityLabel()),
-                
+
                 Tables\Columns\TextColumn::make('tone')
                     ->badge()
                     ->formatStateUsing(fn (ChatbotSetting $record) => $record->getToneLabel()),
-                
+
                 Tables\Columns\TextColumn::make('expertise_level')
                     ->label('Expertise')
                     ->badge()
                     ->formatStateUsing(fn (ChatbotSetting $record) => $record->getExpertiseLevelLabel()),
-                
+
                 Tables\Columns\IconColumn::make('is_default')
                     ->label('Default')
                     ->boolean()
@@ -149,19 +148,19 @@ class ChatbotSettingResource extends Resource
                     ->falseIcon('heroicon-o-outline-star')
                     ->trueColor('warning')
                     ->falseColor('gray'),
-                
+
                 Tables\Columns\IconColumn::make('active')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-x-circle')
                     ->trueColor('success')
                     ->falseColor('danger'),
-                
+
                 Tables\Columns\TextColumn::make('chatbot_resources_count')
                     ->label('Used By')
                     ->counts('chatbotResources')
                     ->sortable(),
-                
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -170,13 +169,13 @@ class ChatbotSettingResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('personality')
                     ->options(ChatbotSetting::getPersonalities()),
-                
+
                 Tables\Filters\SelectFilter::make('tone')
                     ->options(ChatbotSetting::getTones()),
-                
+
                 Tables\Filters\TernaryFilter::make('is_default')
                     ->label('Default Setting'),
-                
+
                 Tables\Filters\TernaryFilter::make('active'),
             ])
             ->actions([
@@ -186,7 +185,7 @@ class ChatbotSettingResource extends Resource
                     ->label('Set as Default')
                     ->icon('heroicon-o-star')
                     ->color('warning')
-                    ->visible(fn (ChatbotSetting $record) => !$record->is_default)
+                    ->visible(fn (ChatbotSetting $record) => ! $record->is_default)
                     ->requiresConfirmation()
                     ->action(fn (ChatbotSetting $record) => $record->setAsDefault())
                     ->successNotificationTitle('Default setting updated'),

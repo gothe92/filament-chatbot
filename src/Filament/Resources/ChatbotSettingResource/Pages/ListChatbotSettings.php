@@ -2,9 +2,9 @@
 
 namespace FilamentChatbot\Filament\Resources\ChatbotSettingResource\Pages;
 
-use FilamentChatbot\Filament\Resources\ChatbotSettingResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use FilamentChatbot\Filament\Resources\ChatbotSettingResource;
 
 class ListChatbotSettings extends ListRecords
 {
